@@ -40,6 +40,8 @@ Tools:
 VS Code
 GitHub
 Chrome / Edge (Testing Environment)
+
+
 📁 Project Structure
 EarlyCare │ ├── index.html
 ├── appointment.html
