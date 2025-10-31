@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Appointment | EarlyCare</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+    /* ----- Appointment Section ----- */
+/* ---------- NAVBAR (GLOBAL FOR ALL PAGES) ---------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Logo styling */
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #023e8a;
+  letter-spacing: 1px;
+}
+
+/* Navbar links layout */
+.navbar .nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Link styles */
+.navbar .nav-links a {
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Hover underline animation */
+.navbar .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #0077b6;
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-links a:hover::after {
+  width: 100%;
+}
+
+.navbar .nav-links a:hover {
+  color: #023e8a;
+}
+
+/* Active page highlight */
+.navbar .nav-links a.active {
+  color: #023e8a;
+  font-weight: 600;
+}
+.navbar .nav-links a.active::after {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 20px;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+</style>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🩺 EarlyCare</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Doctor Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Appointment Section -->
+  <section class="appointment-section">
+    <h2>📅 Book Doctor Appointment</h2>
+    <p>Schedule your consultation with certified doctors for personalized care.</p>
+  </br>
+    <form id="appointmentForm" onsubmit="bookAppointment(event)">
+      <label>Full Name:</label>
+      <input type="text" id="name" required placeholder="Enter your full name">
+
+      <label>Email:</label>
+      <input type="email" id="email" required placeholder="Enter your email">
+
+      <label>Phone Number:</label>
+      <input type="tel" id="phone" required placeholder="Enter your phone number">
+
+      <label>Choose Department:</label>
+      <select id="department">
+        <option>Cardiology (Heart)</option>
+        <option>Endocrinology (Diabetes)</option>
+        <option>Oncology (Cancer)</option>
+        <option>General Medicine</option>
+        <option>Neurology</option>
+      </select>
+
+      <label>Select Date:</label>
+      <input type="date" id="date" required>
+
+      <label>Preferred Time:</label>
+      <select id="time">
+        <option>9:00 AM - 10:00 AM</option>
+        <option>10:00 AM - 11:00 AM</option>
+        <option>11:00 AM - 12:00 PM</option>
+        <option>2:00 PM - 3:00 PM</option>
+        <option>4:00 PM - 5:00 PM</option>
+      </select>
+
+      <button type="submit" class="analyze-btn">Book Appointment</button>
+    </form>
+
+    <div id="confirmationBox" class="result-box"></div>
+  </section>
+
+  <footer>
+    <p>© 2025 EarlyCare | Empowering Preventive Healthcare</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EarlyCare Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📊 EarlyCare Dashboard</h1>
+    <nav>
+      <a href="doctor.html">← Back to Analyzer</a>
+      <a href="login.html">Doctor Login</a>
+    </nav>
+  </header>
+
+  <section class="checkup">
+    <h2>Real-time Health Risk Statistics</h2>
+
+    <div class="cards">
+      <div class="card" id="totalUsers">Total Users: 0</div>
+      <div class="card" id="avgScore">Average Score: 0</div>
+      <div class="card" id="sensitivityCard">Sensitivity: --</div>
+      <div class="card" id="specificityCard">Specificity: --</div>
+    </div>
+
+    <div class="charts-row">
+      <canvas id="riskChart" width="200" height="100"></canvas>
+      <canvas id="perfChart" width="200" height="100"></canvas>
+    </div>
+
+    
+  </section>
+
+  <footer>
+    <p>© 2025 EarlyCare Dashboard</p>
+  </footer>
+
+  <script>
+    if (!localStorage.getItem('healthStats')) {
+      const seed = { Low: 40, Medium: 30, High: 30, total: 100, totalScore: 240 };
+      localStorage.setItem('healthStats', JSON.stringify(seed));
+    }
+
+    if (!localStorage.getItem('performanceMetrics')) {
+      const perf = {
+        accuracyPercent: 95,   
+        sensitivityPercent: 92,
+        specificityPercent: 93, 
+        notes: "Simulated demo metrics — real models need clinical validation."
+      };
+      localStorage.setItem('performanceMetrics', JSON.stringify(perf));
+    }
+
+    const stats = JSON.parse(localStorage.getItem('healthStats'));
+    const perf = JSON.parse(localStorage.getItem('performanceMetrics'));
+
+    document.getElementById("totalUsers").textContent = "Total Users: " + stats.total;
+    const avg = stats.total ? (stats.totalScore / stats.total).toFixed(2) : 0;
+    document.getElementById("avgScore").textContent = "Average Score: " + avg;
+    document.getElementById("sensitivityCard").textContent = "Sensitivity: " + perf.sensitivityPercent + "%";
+    document.getElementById("specificityCard").textContent = "Specificity: " + perf.specificityPercent + "%";
+
+    const ctx = document.getElementById('riskChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+        datasets: [{
+          data: [stats.Low, stats.Medium, stats.High],
+          backgroundColor: ['#74c69d', '#ffb703', '#ff4d6d'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Risk Distribution' } }
+      }
+    });
+
+    const ctx2 = document.getElementById('perfChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Accuracy', 'Sensitivity', 'Specificity'],
+        datasets: [{
+          label: 'Percentage',
+          data: [perf.accuracyPercent, perf.sensitivityPercent, perf.specificityPercent],
+          backgroundColor: ['#0077b6', '#00b4d8', '#40916c']
+        }]
+      },
+      options: {
+        scales: { y: { beginAtZero: true, max: 100 } },
+        plugins: { title: { display: true, text: 'Model Performance (Simulated)' } }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Dashboard | EarlyCare</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>👨‍⚕️ Doctor Dashboard</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Analytics</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <section class="checkup">
+    <h2>Patient Risk Records</h2>
+    <p>All patient entries are stored locally (demo).</p>
+
+    <table id="patientTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Name ⬍</th>
+          <th onclick="sortTable(1)">Age ⬍</th>
+          <th onclick="sortTable(2)">Risk ⬍</th>
+          <th>Score</th>
+          <th>Advice</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="patientData"></tbody>
+    </table>
+
+    <div style="margin-top:15px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="clear-btn" onclick="clearData()">🗑️ Clear All Records</button>
+      <button class="export-btn" onclick="exportCSV()">⬇️ Export CSV</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 EarlyCare | Doctor Portal</p>
+  </footer>
+
+  <script>
+    // Protect doctor dashboard
+    if (localStorage.getItem("doctorLoggedIn") !== "true") {
+      alert("Please log in first!");
+      window.location.href = "login.html";
+    }
+
+    const tableBody = document.getElementById("patientData");
+    const patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+    function renderPatients() {
+      tableBody.innerHTML = "";
+      if (patients.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='6'>No records yet. Run the health check first.</td></tr>";
+        return;
+      }
+      patients.forEach(p => {
+        const row = document.createElement('tr');
+        row.className = p.riskLevel.toLowerCase();
+        row.innerHTML = `
+          <td>${p.name}</td>
+          <td>${p.age}</td>
+          <td><b>${p.riskLevel}</b></td>
+          <td>${p.score}</td>
+          <td>${p.advice}</td>
+          <td>${p.date}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    renderPatients();
+
+    function clearData() {
+      if (confirm("Clear all patient records?")) {
+        localStorage.removeItem("patients");
+        localStorage.removeItem("healthStats");
+        window.location.reload();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("doctorLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function sortTable(n) {
+      const table = document.getElementById("patientTable");
+      let switching = true, dir = "asc", switchcount = 0;
+      while (switching) {
+        switching = false;
+        const rows = table.rows;
+        for (let i = 1; i < rows.length - 1; i++) {
+          let shouldSwitch = false;
+          const x = rows[i].getElementsByTagName("TD")[n];
+          const y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (!x || !y) continue;
+          if (dir === "asc" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) shouldSwitch = true;
+          else if (dir === "desc" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) shouldSwitch = true;
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+            break;
+          }
+        }
+        if (switchcount === 0 && dir === "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+
+    function exportCSV() {
+      if (patients.length === 0) { alert("No records to export."); return; }
+      const headers = ["Name","Age","Risk","Score","Advice","Date"];
+      const rows = patients.map(p => [p.name,p.age,p.riskLevel,p.score,p.advice,p.date]);
+      let csv = headers.join(",") + "\n";
+      rows.forEach(r => { csv += r.map(cell => `"${(cell+"").replace(/"/g,'""')}"`).join(",") + "\n"; });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'earlycare_patients.csv'; a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
+-->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Dashboard | EarlyCare</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">👨‍⚕️ EarlyCare Doctor Panel</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Analytics</a>
+      <a href="#" class="active">Doctor Dashboard</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <section class="checkup">
+    <h2>🩺 Patient Risk Records</h2>
+    <p>All patient entries are stored locally (demo version).</p>
+
+    <table id="patientTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('patientTable',0)">Name ⬍</th>
+          <th onclick="sortTable('patientTable',1)">Age ⬍</th>
+          <th onclick="sortTable('patientTable',2)">Risk ⬍</th>
+          <th>Score</th>
+          <th>Advice</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="patientData"></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button class="clear-btn" onclick="clearData()">🗑️ Clear All Records</button>
+      <button class="export-btn" onclick="exportCSV()">⬇️ Export CSV</button>
+    </div>
+  </section>
+
+  <!-- 🗓️ Doctor Appointment Schedule -->
+  <section class="appointments">
+    <h2>🗓️ Upcoming Doctor Appointments</h2>
+    <p>All appointment bookings are synced from the appointment form.</p>
+
+    <table id="appointmentTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('appointmentTable',0)">Patient Name ⬍</th>
+          <th onclick="sortTable('appointmentTable',1)">Email ⬍</th>
+          <th onclick="sortTable('appointmentTable',2)">Phone ⬍</th>
+          <th onclick="sortTable('appointmentTable',3)">Date ⬍</th>
+          <th>Time</th>
+          <th>Doctor</th>
+          
+        </tr>
+      </thead>
+      <tbody id="appointmentData"></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button class="clear-btn" onclick="clearAppointments()">🗑️ Clear Appointments</button>
+      <button class="export-btn" onclick="exportAppointments()">⬇️ Export CSV</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 EarlyCare | Doctor Portal</p>
+  </footer>
+
+  <script>
+    // --- Doctor Authentication ---
+    if (localStorage.getItem("doctorLoggedIn") !== "true") {
+      alert("Please log in first!");
+      window.location.href = "login.html";
+    }
+
+    // --- Patient Data ---
+    const patientTable = document.getElementById("patientData");
+    const patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+    function renderPatients() {
+      patientTable.innerHTML = "";
+      if (patients.length === 0) {
+        patientTable.innerHTML = "<tr><td colspan='6'>No records yet. Run a health check first.</td></tr>";
+        return;
+      }
+      patients.forEach(p => {
+        const row = document.createElement('tr');
+        row.className = p.riskLevel.toLowerCase();
+        row.innerHTML = `
+          <td>${p.name}</td>
+          <td>${p.age}</td>
+          <td><b>${p.riskLevel}</b></td>
+          <td>${p.score}</td>
+          <td>${p.advice}</td>
+          <td>${p.date}</td>
+        `;
+        patientTable.appendChild(row);
+      });
+    }
+
+    renderPatients();
+
+    // --- Appointment Data ---
+    const appointmentTable = document.getElementById("appointmentData");
+    const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+    function renderAppointments() {
+      appointmentTable.innerHTML = "";
+      if (appointments.length === 0) {
+        appointmentTable.innerHTML = "<tr><td colspan='6'>No upcoming appointments found.</td></tr>";
+        return;
+      }
+      appointments.forEach(a => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${a.name}</td>
+          <td>${a.email}</td>
+          <td>${a.phone}</td>
+          <td>${a.date}</td>
+          <td>${a.time}</td>
+          <td>${a.doctor}</td>
+          
+        `;
+        appointmentTable.appendChild(row);
+      });
+    }
+
+    renderAppointments();
+
+    // --- Sorting Function (Reusable) ---
+    function sortTable(tableId, n) {
+      const table = document.getElementById(tableId);
+      let switching = true, dir = "asc", switchcount = 0;
+      while (switching) {
+        switching = false;
+        const rows = table.rows;
+        for (let i = 1; i < rows.length - 1; i++) {
+          let shouldSwitch = false;
+          const x = rows[i].getElementsByTagName("TD")[n];
+          const y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (!x || !y) continue;
+          if (dir === "asc" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) shouldSwitch = true;
+          else if (dir === "desc" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) shouldSwitch = true;
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+            break;
+          }
+        }
+        if (switchcount === 0 && dir === "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+
+    // --- Clear & Export ---
+    function clearData() {
+      if (confirm("Clear all patient records?")) {
+        localStorage.removeItem("patients");
+        window.location.reload();
+      }
+    }
+
+    function clearAppointments() {
+      if (confirm("Clear all appointments?")) {
+        localStorage.removeItem("appointments");
+        window.location.reload();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("doctorLoggedIn");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    }
+
+    function exportCSV() {
+      if (patients.length === 0) { alert("No records to export."); return; }
+      const headers = ["Name","Age","Risk","Score","Advice","Date"];
+      const rows = patients.map(p => [p.name,p.age,p.riskLevel,p.score,p.advice,p.date]);
+      downloadCSV(headers, rows, "earlycare_patients.csv");
+    }
+
+    function exportAppointments() {
+      if (appointments.length === 0) { alert("No appointments to export."); return; }
+      const headers = ["Name","Email","Date","Time","Doctor","Purpose"];
+      const rows = appointments.map(a => [a.name,a.email,a.date,a.time,a.doctor,a.purpose]);
+      downloadCSV(headers, rows, "earlycare_appointments.csv");
+    }
+
+    function downloadCSV(headers, rows, filename) {
+      let csv = headers.join(",") + "\n";
+      rows.forEach(r => { csv += r.map(cell => `"${(cell+"").replace(/"/g,'""')}"`).join(",") + "\n"; });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

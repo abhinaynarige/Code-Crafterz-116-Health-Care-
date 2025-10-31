@@ -1,0 +1,147 @@
+/* Common styling */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+body { background: #f5f7fa; color: #111; line-height: 1.5; }
+
+/* Header */
+header { background: linear-gradient(90deg,#03045e,#0077b6); color: #fff; padding: 12px 20px; display:flex; justify-content:space-between; align-items:center; }
+header h1 { font-size:1.25rem; }
+nav a { color:#fff; margin-left:14px; text-decoration:none; font-weight:600; }
+nav a:hover { opacity:0.9; text-decoration:underline; }
+
+/* Hero 
+
+.hero { background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.3)), url('C:\Users\abhin\Downloads\background.jpg') center/cover no-repeat; color:#fff; text-align:center; padding:90px 20px; }
+.hero h2 { font-size:2rem; margin-bottom:10px; }
+.hero p { max-width:900px; margin:0 auto 18px; }
+*/
+.hero {
+  background-image: url("./background.jpg");
+  background-size: cover;         /* makes image cover full area */
+  background-position: center;    /* centers the image */
+  background-repeat: no-repeat;   /* prevents tiling */
+  height: 100vh;                  /* full screen height */
+  display: flex;
+  align-items: center;            /* vertically center content */
+  justify-content: center;        /* horizontally center content */
+  position: relative;
+  color: white;                   /* text color */
+  text-align: center;
+}
+
+/* Optional: Add a dark overlay for better text contrast */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+}
+
+.hero-content {
+  position: relative; /* keeps text above overlay */
+  z-index: 1;
+  max-width: 600px;
+}
+
+/* Buttons */
+button { cursor:pointer; }
+button:hover { opacity:0.95; }
+
+/* Checkup & forms */
+.checkup { padding:40px 20px; max-width:920px; margin: -40px auto 30px; background: transparent; }
+form { display:flex; flex-direction:column; gap:10px; background:#fff; padding:22px; border-radius:12px; box-shadow:0 6px 20px rgba(2,6,23,0.08); }
+label { font-weight:600; margin-top:6px; text-align:left; }
+input, select { padding:10px; border-radius:8px; border:1px solid #dcdcdc; }
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+/* Primary submit */
+form button[type="submit"] { margin-top:12px; background:#0077b6; color:#fff; padding:12px; border:none; border-radius:8px; font-weight:700; }
+
+/* Result card */
+.result { margin-top:18px; padding:18px; border-radius:10px; transition:all 0.3s ease; display:block; max-width:640px; margin-left:auto; margin-right:auto; text-align:center; }
+.hidden { display:none; }
+.result.low { background:#d8f3dc; border:2px solid #40916c; color:#1b4332; }
+.result.medium { background:#fff3b0; border:2px solid #e09f3e; color:#783f04; }
+.result.high { background:#ffccd5; border:2px solid #d00000; color:#6a040f; animation:pulse 1s infinite; }
+@keyframes pulse { 0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)} }
+
+/* Dashboard cards */
+.cards { display:flex; gap:16px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+.card { background:#fff; padding:12px 18px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); min-width:150px; text-align:center; font-weight:700; }
+
+/* Charts layout */
+.charts-row { display:flex; gap:10px; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-top:18px; }
+
+/* Chatbot */
+.chatbot-section { max-width:700px; margin:22px auto; background:#f0f8ff; padding:18px; border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,0.05); }
+#chatbox { display:flex; flex-direction:column; height:300px; border-radius:10px; border:1px solid #dcdcdc; background:#fff; overflow:hidden; }
+#chatlog { flex:1; padding:12px; display:flex; flex-direction:column; gap:10px; overflow:auto; }
+.chat-input { display:flex; padding:8px; gap:8px; border-top:1px solid #eee; }
+.chat-input input { flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; }
+.chat-input button { padding:10px 14px; border-radius:8px; background:#0077b6; color:#fff; border:none; font-weight:700; }
+.user-msg, .bot-msg { max-width:80%; padding:10px; border-radius:10px; }
+.user-msg { background:#caf0f8; align-self:flex-end; }
+.bot-msg { background:#90e0ef; align-self:flex-start; }
+
+/* Table styles */
+table { width:100%; border-collapse:collapse; margin-top:20px; }
+th, td { border:1px solid #e6e6e6; padding:10px; text-align:center; }
+th { background:#0077b6; color:#fff; cursor:pointer; }
+tr.low { background:#d8f3dc; }
+tr.medium { background:#fff3b0; }
+tr.high { background:#ffccd5; }
+tr:hover { background:#f0f0f0; }
+
+/* Login form */
+.login-form { max-width:420px; margin:10px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.06); display:flex; flex-direction:column; gap:10px; }
+.login-form input { padding:10px; border-radius:8px; border:1px solid #ddd; }
+
+/* Minor buttons */
+.clear-btn, .export-btn { background:#d00000; color:#fff; border:none; padding:10px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
+.export-btn { background:#0077b6; }
+.clear-btn:hover { background:#9d0208; }
+.export-btn:hover { background:#023e8a; }
+
+/* Footer */
+footer { background:#03045e; color:#fff; text-align:center; padding:12px 20px; margin-top:20px; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .charts-row { flex-direction:column; align-items:center; }
+  header { flex-direction:column; gap:8px; align-items:flex-start; padding:12px; }
+}
+
+
+
+
+
+
+
+
+.appointment-section, .login-section {
+  text-align: center;
+  background: #f8fbff;
+  padding: 50px 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.appointment-section h2, .login-section h2 {
+  color: #023e8a;
+  margin-bottom: 15px;
+}
+.appointment-section form, .login-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.appointment-section input, .appointment-section select,
+.login-section input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.active {
+  color: #023e8a !important;
+  font-weight: bold;
+}

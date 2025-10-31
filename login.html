@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Login | EarlyCare</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>👨‍⚕️ Doctor Login</h1>
+    <a href="./index.html" style="color: white;">Home</a>
+  </header>
+</br>
+  <section class="checkup">
+    <h2 align="center">Secure Access Portal</h2>
+  </br>
+
+    <form id="loginForm" class="login-form">
+      <label>Email:</label>
+      <input type="email" id="email" placeholder="Enter Email" required />
+
+      <label>Password:</label>
+      <input type="password" id="password" placeholder="Enter Password" required />
+
+      <button type="submit">Login</button>
+    </form>
+</br>
+</br>
+    <p style="margin-top:12px;font-size:0.95em;color:#333">Demo credentials: <b>doctor@earlycare.com</b> / <b>earlycare123</b></p>
+    <p id="loginMessage" style="margin-top:12px;font-weight:bold;"></p>
+  </section>
+
+  <footer>
+    <p>© 2025 EarlyCare | Secure Doctor Portal</p>
+  </footer>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("loginMessage");
+
+      const demoDoctor = { email: "doctor@earlycare.com", password: "earlycare123" };
+
+      if (email === demoDoctor.email && password === demoDoctor.password) {
+        message.style.color = "green";
+        message.textContent = "✅ Login successful! Redirecting...";
+        localStorage.setItem("doctorLoggedIn", "true");
+        setTimeout(() => window.location.href = "doctor.html", 800);
+      } else {
+        message.style.color = "red";
+        message.textContent = "❌ Invalid credentials. Try again.";
+      }
+    });
+  </script>
+</body>
+</html>

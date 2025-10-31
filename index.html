@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EarlyCare | AI Health Risk Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🩺 EarlyCare</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#chatbot">AI Assistant</a>
+      <a href="appointment.html">Book Appointment</a>
+      <a href="login.html" target="_blank">Doctor Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-content" >
+      <h1>Detect Early. Live Longer.</h1>
+    </br>
+    </br>
+      <p font-size="14">Delayed diagnosis of cancer, diabetes or heart disease increases costs and reduces survival. EarlyCare gives instant triage and routes data to clinicians.</p>
+    </br>
+    </br>
+      <button onclick="scrollToCheckup()" style="background-color: teal;color: white;font-size: large;">Check My Health</button>
+    </div>
+  </section>
+
+  <!-- Chatbot -->
+  <section id="chatbot" class="chatbot-section">
+    <h2>🤖 EarlyCare AI Health Assistant</h2>
+    <div id="chatbox">
+      <div id="chatlog">
+        <div class="bot-msg">Hi 👋 I'm EarlyCare Assistant! Tell me your symptoms (chest pain, fatigue, vision issues...).</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your symptom..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Health Check Form -->
+  <section id="checkup" class="checkup">
+    <h2>🩻 Quick Health Risk Check</h2>
+    <p>Short form, instant triage — encourages early follow-up.</p>
+
+    <form id="healthForm">
+      <label>Full Name:</label>
+      <input type="text" id="name" required placeholder="Enter your full name" />
+
+      <label>Age:</label>
+      <input type="number" id="age" required placeholder="Enter your age" />
+
+      <label>Family History (Diabetes/Heart/Cancer):</label>
+      <select id="familyHistory">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <label>Frequent thirst or urination?</label>
+      <select id="urination">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <label>Chest pain or shortness of breath?</label>
+      <select id="chestPain">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <label>Sudden weight loss?</label>
+      <select id="weightLoss">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <label>Vision problems?</label>
+      <select id="vision">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <button type="submit">Analyze My Risk</button>
+    </form>
+
+    <!-- Result Card -->
+    <div id="result" class="result hidden">
+      <h3>Your Health Risk Level:</h3>
+      <p id="riskLevel"></p>
+      <p id="advice"></p>
+      <a href="appointment.html" class="appointment-btn">Book Appointment 📊</a>
+    </div>
+  </section>
+
+  
+
+  <footer>
+    <p>© 2025 EarlyCare | Hackathon Prototype</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
